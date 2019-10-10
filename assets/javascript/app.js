@@ -76,10 +76,11 @@ $(".animalName").click(function(e) {
     console.log(response);
     var objIndex = response.data.length;
     for (var i = 0; i < objIndex; i++) {
-      var imgSrc = response.data[i].images.fixed_height_still.url;
+      var imgSrc_still = response.data[i].images.fixed_height_still.url;
+      var imgSrc_animate = response.dat[i].images.fixed_height;
       var ratings = response.data[i].rating;
       resultDiv.append(
-        $("<img>").attr("src", imgSrc),
+        $("<img>").attr("src", imgSrc_still),
         $("<h5>").text("Ratings: " + ratings)
       );
       $(".container-fluid").append(resultDiv);
