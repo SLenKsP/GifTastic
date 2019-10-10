@@ -54,7 +54,7 @@ $("#submit").click(function(e) {
   btnFromUserInput.attr("name", userInput);
   animalBtnSection.append(btnFromUserInput);
 });
-var resultDiv = $("<div class='result'>");
+var resultDiv = $("<section class='result'>");
 // get api
 $(".animalName").click(function(e) {
   e.preventDefault();
@@ -67,7 +67,7 @@ $(".animalName").click(function(e) {
     animalNameFromBtnClick +
     "&api_key=" +
     apiKey +
-    "&limit=5";
+    "&limit=10";
 
   $.ajax({
     type: "GET",
@@ -76,14 +76,36 @@ $(".animalName").click(function(e) {
     console.log(response);
     var objIndex = response.data.length;
     for (var i = 0; i < objIndex; i++) {
-      var imgSrc_still = response.data[i].images.fixed_height_still.url;
-      var imgSrc_animate = response.dat[i].images.fixed_height;
+      var img = $("<img>");
+      var imgSrc_still = response.data[i].images.fixed_width_still.url;
+      var imgSrc_animate = response.data[i].images.fixed_width.url;
       var ratings = response.data[i].rating;
-      resultDiv.append(
-        $("<img>").attr("src", imgSrc_still),
-        $("<h5>").text("Ratings: " + ratings)
-      );
+      img.attr("src", imgSrc_still);
+      img.attr("data-still", imgSrc_still);
+      img.attr("data-animate", imgSrc_animate);
+      img.attr("data-state", "still");
+      img.addClass("gif");
+      resultDiv.append(img, $("<h5>").text("Ratings: " + ratings));
       $(".container-fluid").append(resultDiv);
     }
+    $(".gif").click(function(e) {
+      e.preventDefault();
+      console.log("data-state:" + $(this).attr("data-state"));
+      var state = $(this).attr("data-state");
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+      // function to still other animating image when this image is clicked
+      $(".gif")
+        .not(this)
+        .each(function(e) {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still");
+        });
+    });
   });
 });
