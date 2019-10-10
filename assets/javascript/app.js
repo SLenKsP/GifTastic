@@ -48,17 +48,18 @@ $(".container-fluid").append(formDiv);
 // get user input and add button to animal button section
 $("#submit").click(function(e) {
   e.preventDefault();
-
+  
   var userInput = $("#userInput").val();
   var btnFromUserInput = $("<button class='animalName btn btn-info m-1'>");
   btnFromUserInput.text(userInput);
   btnFromUserInput.attr("name", userInput);
   animalBtnSection.append(btnFromUserInput);
+  $("input").val("");
   // animals.push(userInput);
 });
 var resultDiv = $("<section class='result'>");
-// get api
 
+// get api
 animalBtnSection.on("click", ".animalName", function(e) {
   e.preventDefault();
   $(".result").empty();
