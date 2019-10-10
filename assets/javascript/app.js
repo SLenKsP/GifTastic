@@ -1,4 +1,5 @@
 // array with animal names
+
 var animals = [
   "rabbit",
   "dog",
@@ -53,17 +54,19 @@ $("#submit").click(function(e) {
   btnFromUserInput.text(userInput);
   btnFromUserInput.attr("name", userInput);
   animalBtnSection.append(btnFromUserInput);
+  // animals.push(userInput);
 });
 var resultDiv = $("<section class='result'>");
 // get api
-$(".animalName").click(function(e) {
+
+animalBtnSection.on("click", ".animalName", function(e) {
   e.preventDefault();
   $(".result").empty();
   var animalNameFromBtnClick = $(this).attr("name");
   console.log("clicked Animal: " + animalNameFromBtnClick);
   var apiKey = "Jc2Gco8Y1Fbo3gdJ3WLjitNtP5Q3Mz4I";
   var queryUrl =
-    "http://api.giphy.com/v1/gifs/search?q=" +
+    "https://api.giphy.com/v1/gifs/search?q=" +
     animalNameFromBtnClick +
     "&api_key=" +
     apiKey +
@@ -76,7 +79,7 @@ $(".animalName").click(function(e) {
     console.log(response);
     var objIndex = response.data.length;
     for (var i = 0; i < objIndex; i++) {
-      var img = $("<img>");
+      var img = $("<img class = 'd-inline'>");
       var imgSrc_still = response.data[i].images.fixed_width_still.url;
       var imgSrc_animate = response.data[i].images.fixed_width.url;
       var ratings = response.data[i].rating;
@@ -85,7 +88,10 @@ $(".animalName").click(function(e) {
       img.attr("data-animate", imgSrc_animate);
       img.attr("data-state", "still");
       img.addClass("gif");
-      resultDiv.append(img, $("<h5>").text("Ratings: " + ratings));
+      resultDiv.append(
+        img,
+        $("<h5 class = 'd-inline'>").text("Ratings: " + ratings)
+      );
       $(".container-fluid").append(resultDiv);
     }
     $(".gif").click(function(e) {
