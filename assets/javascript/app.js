@@ -57,10 +57,21 @@ $("#submit").click(function(e) {
 
   var userInput = $("#userInput").val();
   var btnFromUserInput = $("<button class='animalName btn btn-info m-1'>");
-  btnFromUserInput.text(userInput);
-  btnFromUserInput.attr("name", userInput);
-  animalBtnSection.append(btnFromUserInput);
-  $("input").val("");
+  if (userInput.match(/[a-z]/i)) {
+    if (!animals.includes(userInput)) {
+      btnFromUserInput.text(userInput);
+      btnFromUserInput.attr("name", userInput);
+      animalBtnSection.append(btnFromUserInput);
+      $("input").val("");
+    } else {
+      alert(userInput + " is already added!");
+      $("input").val("");
+    }
+  } else {
+    alert(
+      "Input field is empty or invalid key entered! Enter alphabetic letters only."
+    );
+  }
 });
 var resultDiv = $("<section class='result'>");
 
@@ -121,5 +132,8 @@ animalBtnSection.on("click", ".animalName", function(e) {
           $(this).attr("data-state", "still");
         });
     });
+  });
+  $("button").on("dblclick", function() {
+    $(this).remove();
   });
 });
