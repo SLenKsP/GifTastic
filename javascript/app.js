@@ -58,7 +58,7 @@ $("#submit").click(function(e) {
   var userInput = $("#userInput").val();
   var btnFromUserInput = $("<button class='animalName btn btn-info m-1'>");
   if (userInput.match(/[a-z]/i)) {
-    if (!animals.includes(userInput)) {
+    if (!animals.includes(userInput.toLowerCase())) {
       btnFromUserInput.text(userInput);
       btnFromUserInput.attr("name", userInput);
       animalBtnSection.append(btnFromUserInput);
