@@ -55,6 +55,7 @@ $("#submit").click(function(e) {
   animalBtnSection.append(btnFromUserInput);
 });
 var resultDiv = $("<section class='result'>");
+
 // get api
 $(".animalName").click(function(e) {
   e.preventDefault();
