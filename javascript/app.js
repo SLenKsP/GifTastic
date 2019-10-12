@@ -71,6 +71,7 @@ $("#submit").click(function(e) {
     alert(
       "Input field is empty or invalid key entered! Enter alphabetic letters only."
     );
+     $("input").val("");
   }
 });
 var resultDiv = $("<section class='result'>");
