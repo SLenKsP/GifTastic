@@ -1,4 +1,5 @@
 // array with animal names
+
 var animals = [
   "rabbit",
   "dog",
@@ -27,6 +28,12 @@ animals.forEach(function(element) {
   btn.attr("name", element);
   $(".container-fluid").append(animalBtnSection.append(btn));
 });
+// creating row and columns to section API and add buttons
+var rowSec = $("<div class='row'>");
+var apiSec = $("<div class= 'col-sm-8'>");
+var formSec = $("<div class = 'col-sm-4'>");
+rowSec.append(apiSec, formSec);
+$(".container-fluid").append(rowSec);
 
 // creating user input div
 var formDiv = $("<div id= 'formSection' class='float-right m-4' >");
@@ -42,7 +49,7 @@ divInsideForm.append(
 );
 inputForm.append(divInsideForm);
 formDiv.append($("<h5 class ='text-dark'>Add an animal</h5>"), inputForm);
-$(".container-fluid").append(formDiv);
+formSec.append(formDiv);
 
 // get user input and add button to animal button section
 $("#submit").click(function(e) {
@@ -53,18 +60,19 @@ $("#submit").click(function(e) {
   btnFromUserInput.text(userInput);
   btnFromUserInput.attr("name", userInput);
   animalBtnSection.append(btnFromUserInput);
+  $("input").val("");
 });
 var resultDiv = $("<section class='result'>");
 
 // get api
-$(".animalName").click(function(e) {
+animalBtnSection.on("click", ".animalName", function(e) {
   e.preventDefault();
   $(".result").empty();
   var animalNameFromBtnClick = $(this).attr("name");
   console.log("clicked Animal: " + animalNameFromBtnClick);
   var apiKey = "Jc2Gco8Y1Fbo3gdJ3WLjitNtP5Q3Mz4I";
   var queryUrl =
-    "http://api.giphy.com/v1/gifs/search?q=" +
+    "https://api.giphy.com/v1/gifs/search?q=" +
     animalNameFromBtnClick +
     "&api_key=" +
     apiKey +
@@ -77,7 +85,8 @@ $(".animalName").click(function(e) {
     console.log(response);
     var objIndex = response.data.length;
     for (var i = 0; i < objIndex; i++) {
-      var img = $("<img>");
+      var sectionDiv = $("<div class='sectionDiv'>");
+      var img = $("<img class='d-inline'>");
       var imgSrc_still = response.data[i].images.fixed_width_still.url;
       var imgSrc_animate = response.data[i].images.fixed_width.url;
       var ratings = response.data[i].rating;
@@ -86,8 +95,12 @@ $(".animalName").click(function(e) {
       img.attr("data-animate", imgSrc_animate);
       img.attr("data-state", "still");
       img.addClass("gif");
-      resultDiv.append(img, $("<h5>").text("Ratings: " + ratings));
-      $(".container-fluid").append(resultDiv);
+      sectionDiv.append(
+        img,
+        $("<h5 class='d-block'>").text("Ratings: " + ratings)
+      );
+      resultDiv.append(sectionDiv);
+      apiSec.append(resultDiv);
     }
     $(".gif").click(function(e) {
       e.preventDefault();
