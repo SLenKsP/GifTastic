@@ -48,7 +48,7 @@ divInsideForm.append(
   submitBtn
 );
 inputForm.append(divInsideForm);
-formDiv.append($("<h5>Add an animal</h5>"), inputForm);
+formDiv.append($("<h5 class='text-light'>Add an animal</h5>"), inputForm);
 formSec.append(formDiv);
 
 // get user input and add button to animal button section
