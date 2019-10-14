@@ -114,6 +114,7 @@ animalBtnSection.on("click", ".animalName", function(e) {
       resultDiv.append(sectionDiv);
       apiSec.append(resultDiv);
     }
+    // click event to start animating gif
     $(".gif").click(function(e) {
       e.preventDefault();
       console.log("data-state:" + $(this).attr("data-state"));
